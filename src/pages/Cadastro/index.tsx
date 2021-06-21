@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import InputTextField from '../../components';
-import LoginService from '../../services/login';
+import LoginService from '../../services/api-service';
 import { useNavigation } from '@react-navigation/core';
 export default function Cadastro() {
   const [ address, setAdress ] = React.useState('');

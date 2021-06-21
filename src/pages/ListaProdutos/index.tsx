@@ -1,50 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Platform, StyleSheet, Text, View, ScrollView, TextInput, FlatList, Alert, TouchableOpacity, } from 'react-native';
-import LoginService from '../../services/login';
-import { ProductList } from '../../models/productList'
+import LoginService from '../../services/api-service';
 import { styles } from './style';
 
-//export default function ProductListPage({ navigation }: any) {
 const ProductListPage = ({ navigation }: any) => {
-  
-//function ProductListPage() {//OK COM EXPORT NO FIM
-//export default function ProductListPage() {
-    //const [ productLists, setProductList ] = React.useState<ProductList[]>();
     const [products, setProducts] = useState(Object);
 
-    LoginService.get("product/list", 
-    {
-     "headers": {
-       'Content-Type': 'application/json'
-     }
-    })
-    .then((response) => {
-      setProducts(response.data);
-      console.log(response.data);
-      /*const products: ProductList[] = response.data;
-      console.log('Data: ', products);
-      const initial = new Map<Number, ProductList>();
-      
-      const map = products.reduce((map, product) => {
-        map.set(product.id, product);
-        return map;
-      }, initial)
-
-      console.log('Data: ', map);
-      console.log('DataMAP: ', Array.from(map.keys()));
-
-      const list = Array.from(map.values());
-      list.sort((a, b) => {
-        return a.id - b.id;
+    useEffect(() => {
+      LoginService.get("product/list", 
+      {
+      "headers": {
+        'Content-Type': 'application/json'
+      }
+      })
+      .then((response) => {
+        setProducts(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+        alert('Dados invalidos favor reenviar.');
       });
-      console.log('List: ', list);//lista ordenada
-      alert('Lista retornou com sucesso!!!');
-      setProductList(list);*/
-    })
-    .catch((err) => {
-      console.error("ops! ocorreu um erro" + err);
-      alert('Dados invalidos favor reenviar.');
-    });
+    }, []);
     
     return (
     <View style={styles.container}>

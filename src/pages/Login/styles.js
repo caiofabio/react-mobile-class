@@ -13,13 +13,6 @@ export default styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  /*
-  logo: {
-    width: 170,
-    height: 195
-  },
-  */
-
   form: {
     flex: 1,
     alignItems: 'center',

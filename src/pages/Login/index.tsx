@@ -12,22 +12,22 @@ import {
 } from "react-native";
 
 import { LoginModel } from '../../models/login';
-import LoginService from '../../services/login';
-import axios from "axios";
+import LoginService from '../../services/api-service';
+import InputTextField from '../../components';
  
-export default function Login() {
+const Login = ({ navigation }: any) => {
+//export default function Login() {
   const [ login, setEmail ] = React.useState('');
   const [ password, setPassw ] = React.useState('');
-  const navigation = useNavigation();
+  const navigationIn = useNavigation();
   let fail = true;
  
   function goNewUser() {
-    //navigation.navigate('Cadastro');
-    navigation.navigate('Lista de Produtos');
+    navigationIn.navigate('Cadastro');
   }
 
   function goProductList() {
-    navigation.navigate('Lista de Produtos');
+    navigationIn.navigate('Lista de Produtos');
   }
 
   function handleLogin() {
@@ -65,28 +65,17 @@ export default function Login() {
         }); 
   }
 
-
+//secureTextEntry={true}
   return (
     <View style={styles.container}>
  
       <StatusBar style="auto" />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="E-mail."
-          placeholderTextColor="#003f5c"
-          onChangeText={setEmail}
-        />
+      <View>
+        <InputTextField label="Login" onChange={setEmail} secure={false}/>
       </View>
  
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Senha."
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={setPassw}
-        />
+      <View>
+        <InputTextField label="Senha" onChange={setPassw} secure={true}/>
       </View>
  
       <TouchableOpacity>
@@ -99,6 +88,8 @@ export default function Login() {
     </View>
   );
 }
+
+export default Login;
  
 const styles = StyleSheet.create({
   container: {
@@ -106,27 +97,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
- 
-  image: {
-    marginBottom: 40,
-  },
- 
-  inputView: {
-    backgroundColor: "#00BFFF",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
-    marginBottom: 20,
- 
-    alignItems: "center",
-  },
- 
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
   },
  
   forgot_button: {

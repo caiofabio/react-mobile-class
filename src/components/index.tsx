@@ -6,13 +6,14 @@ import styles from './styles';
 interface Props {
     label: string;
     onChange: (text: string) => void;
+    secure: boolean;
 }
 
 export default function InputTextField(props: Props) {
     return (
         <>
             <Text style={styles.label}>{props.label}</Text>
-            <TextInput style={styles.input} onChangeText={props.onChange} />
+            <TextInput style={styles.input} onChangeText={props.onChange} secureTextEntry={props.secure} />
         </>
     );
 }
