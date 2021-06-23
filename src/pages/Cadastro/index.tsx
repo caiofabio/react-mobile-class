@@ -3,16 +3,17 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import InputTextField from '../../components';
 import LoginService from '../../services/api-service';
 import { useNavigation } from '@react-navigation/core';
-export default function Cadastro() {
+
+export default function Cadastro({ navigation }: any) {
   const [ address, setAdress ] = React.useState('');
   const [ age, setAge ] = React.useState('');
   const [ email, setEmail ] = React.useState('');
   const [ name, setName ] = React.useState('');
   const [ password, setTPassword ] = React.useState('');
-  const navigation = useNavigation();
+  const navigations = useNavigation();
 
   function goLogin() {
-    navigation.navigate('Login');
+    navigations.navigate('Login');
   }
 
   function handleSave() {
@@ -37,6 +38,11 @@ export default function Cadastro() {
       return;
     }
 
+    if ( parseInt(age) < 17 ) {
+      alert('Idade deve ser superior a 17')
+      return;
+    }
+
     LoginService.post("user/customer/add", 
     {
       'address': address,
@@ -51,23 +57,26 @@ export default function Cadastro() {
      }
    })
      .then((response) => {
+      console.log(response)
       alert('Usuario Cadastrado com Sucesso!!!');
       goLogin()/*console.log(response.data)*/
      })
      .catch((err) => {
-       console.error("ops! ocorreu um erro" + err);
+       console.log(err)
+       //console.error("ops! ocorreu um erro" + err);
        alert('Dados invalidos favor reenviar.');
+
      }); 
   }
   return (
     <View>
-      <InputTextField label="Nome" onChange={setName} />
-      <InputTextField label="Idade" onChange={setAge} />
-      <InputTextField label="Endereço" onChange={setAdress} />
-      <InputTextField label="E-mail" onChange={setEmail} />
-      <InputTextField label="Senha" onChange={setTPassword} />
+      <InputTextField label="Nome" onChange={setName} secure={false} />
+      <InputTextField label="Idade" onChange={setAge} secure={false}/>
+      <InputTextField label="Endereço" onChange={setAdress} secure={false}/>
+      <InputTextField label="E-mail" onChange={setEmail} secure={false}/>
+      <InputTextField label="Senha" onChange={setTPassword} secure={false}/>
 
-      <Button title='Salvar' onPress={handleSave} />
+      <Button title='Salva' onPress={handleSave} />
     </View>
   );
 }
